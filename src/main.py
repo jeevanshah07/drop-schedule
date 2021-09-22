@@ -62,27 +62,30 @@ def order_schedule(schedule: list, order: list) -> None:
 
     print_schedule(schedule)
 
+def main():
+    db = sqlite3.connect('data/schedule.db')
+    cur = db.cursor()
 
-db = sqlite3.connect('data/schedule.db')
-cur = db.cursor()
+    schedule = fetch_schedule(cur)
 
-schedule = fetch_schedule(cur)
+    if not schedule or args.edit:
+        schedule = save_schedule(cur, db)
 
-if not schedule or args.edit:
-    schedule = save_schedule(cur, db)
+    if args.day:
+        day = int(args.day)
+    else:
+        day = int(input("What day is today?: "))
 
-if args.day:
-    day = int(args.day)
-else:
-    day = int(input("What day is today?: "))
+    if day == 1:
+        order_schedule(schedule, order=[0, 1, 2, 4, 5, 6])
+    elif day == 2:
+        order_schedule(schedule, order=[1, 2, 3, 5, 6, 7])
 
-if day == 1:
-    order_schedule(schedule, order=[0, 1, 2, 4, 5, 6])
-elif day == 2:
-    order_schedule(schedule, order=[1, 2, 3, 5, 6, 7])
+    elif day == 3:
+        order_schedule(schedule, order=[2, 3, 0, 6, 7, 4])
 
-elif day == 3:
-    order_schedule(schedule, order=[2, 3, 0, 6, 7, 4])
+    elif day == 4:
+        order_schedule(schedule, order=[3, 0, 1, 7, 4, 5])
 
-elif day == 4:
-    order_schedule(schedule, order=[3, 0, 1, 7, 4, 5])
+if __name__ == '__main__':
+    main()
