@@ -90,7 +90,7 @@ def print_schedule(schedule_list: list[str]) -> None:
         print(f"Block #{idx}: {class_name}")
 
 
-def order_schedule(schedule: list[str], order: list[int]) -> None:
+def order_schedule(schedule: list[str], day: int) -> None:
     """
     Orders the schedule based on input
 
@@ -99,6 +99,15 @@ def order_schedule(schedule: list[str], order: list[int]) -> None:
         order: A list of integers that has what order the schedule should be ordered in
     """
     # Reorder schedule based on the numbers in the order param
+    if day == 1:
+        order = [0, 1, 2, 4, 5, 6]
+    elif day == 2:
+        order = [1, 2, 3, 5, 6, 7]
+    elif day == 3:
+        order = [2, 3, 0, 6, 7, 4]
+    else:
+        order = [3, 0, 1, 7, 4, 5]
+
     schedule = [
         schedule[order[0]],
         schedule[order[1]],
@@ -133,15 +142,13 @@ def main():
 
     # Based on the day number order the schedule (which also prints it out)
     if day == 1:
-        order_schedule(schedule, order=[0, 1, 2, 4, 5, 6])
+        order_schedule(schedule, day=1)
     elif day == 2:
-        order_schedule(schedule, order=[1, 2, 3, 5, 6, 7])
-
+        order_schedule(schedule, day=2)
     elif day == 3:
-        order_schedule(schedule, order=[2, 3, 0, 6, 7, 4])
-
+        order_schedule(schedule, day=3)
     elif day == 4:
-        order_schedule(schedule, order=[3, 0, 1, 7, 4, 5])
+        order_schedule(schedule, day=4)
 
 
 if __name__ == "__main__":
